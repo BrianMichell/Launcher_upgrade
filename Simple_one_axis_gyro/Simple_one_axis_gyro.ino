@@ -18,6 +18,10 @@ void loop() {
   int16_t z = readGyroData(GYRO_Z_ADDR);
   bool safeToFire = false;
 
+  Serial.write("Gyro Z rate of change: ");
+  Serial.print(z);
+  Serial.write("\n");
+
   // Yellow if moving too much
   if(abs(z) > 300) {
     digitalWrite(5, HIGH);
