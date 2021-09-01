@@ -1,21 +1,24 @@
 #include <Wire.h>
 #define MPU_ADDR 0x68
-#define GYRO_Z_ADDR 0x47
+#define GYRO_Z_ADDR 0x43
+
+int16_t offset;
 
 void setup() {
   Wire.begin();
   Serial.begin(9600);
-  writeByte(MPU_ADDR,0x1B , 0x00); // Set to 250 DPS
+  writeByte(MPU_ADDR,0x1B , 0x18); // Set to 250 DPS
 //  writeByte(MPU_ADDR, 0x1D, 0x06); // 5Hz low pass filter
   pinMode(6, OUTPUT);
   pinMode(5, OUTPUT);
   pinMode(3, OUTPUT);
+  offset = getOffset();
 }
 
 void loop() {
   // put your main code here, to run repeatedly:
   Wire.beginTransmission(MPU_ADDR);
-  int16_t z = readGyroData(GYRO_Z_ADDR);
+  int16_t z = readGyroData(GYRO_Z_ADDR) - offset;
   bool safeToFire = false;
 
   Serial.write("Gyro Z rate of change: ");
@@ -23,7 +26,7 @@ void loop() {
   Serial.write("\n");
 
   // Yellow if moving too much
-  if(abs(z) > 300) {
+  if(abs(z) > 200) {
     digitalWrite(5, HIGH);
     safeToFire = false;
   } else {
@@ -51,6 +54,14 @@ void loop() {
     digitalWrite(3, HIGH);
   }
   
+}
+
+int16_t getOffset() {
+  int16_t accumulator = 0;
+  for(int i=0; i<15; i++) {
+    accumulator += readGyroData(GYRO_Z_ADDR);
+  }
+  return -(accumulator/15);
 }
 
 int16_t readGyroData(uint8_t addr) {
