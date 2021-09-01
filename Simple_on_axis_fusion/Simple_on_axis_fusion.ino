@@ -89,7 +89,6 @@ void getBytes(uint8_t* tmp, uint8_t addr, uint8_t subAddr, uint8_t bytes) {
   while(Wire.available()) {
     tmp[i++] = Wire.read();
   }
-//  Serial.write("\n");
 }
 
 
