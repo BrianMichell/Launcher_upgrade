@@ -6,7 +6,7 @@ void setup() {
   Wire.begin();
   Serial.begin(9600);
   writeByte(MPU_ADDR,0x1B , 0x00); // Set to 250 DPS
-  writeByte(MPU_ADDR, 0x1D, 0x06); // 5Hz low pass filter
+//  writeByte(MPU_ADDR, 0x1D, 0x06); // 5Hz low pass filter
   pinMode(6, OUTPUT);
   pinMode(5, OUTPUT);
   pinMode(3, OUTPUT);
