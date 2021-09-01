@@ -14,7 +14,7 @@ void setup() {
   pinMode(6, OUTPUT); // Green light
   pinMode(5, OUTPUT); // Yellow light
   pinMode(3, OUTPUT); // Red light
-  offset = getOffset();
+  offset = getOffset(GYRO_Z_ADDR);
 }
 
 void loop() {
@@ -59,10 +59,10 @@ void loop() {
   
 }
 
-int16_t getOffset() {
+int16_t getOffset(int16_t reg) {
   int16_t accumulator = 0;
   for(int i=0; i<15; i++) {
-    accumulator += readSensorData(GYRO_Z_ADDR);
+    accumulator += readSensorData(reg);
   }
   return -(accumulator/15);
 }
