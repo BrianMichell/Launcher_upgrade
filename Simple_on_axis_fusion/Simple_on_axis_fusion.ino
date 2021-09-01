@@ -11,17 +11,17 @@ void setup() {
   writeByte(MPU_ADDR,0x1B , 0x18); // Set to 2000 DPS
   writeByte(MPU_ADDR, 0x1C, 0x00); // Set to 2g
   writeByte(MPU_ADDR, 0x1D, 0x06); // 5Hz low pass filter
-  pinMode(6, OUTPUT);
-  pinMode(5, OUTPUT);
-  pinMode(3, OUTPUT);
+  pinMode(6, OUTPUT); // Green light
+  pinMode(5, OUTPUT); // Yellow light
+  pinMode(3, OUTPUT); // Red light
   offset = getOffset();
 }
 
 void loop() {
   // put your main code here, to run repeatedly:
   Wire.beginTransmission(MPU_ADDR);
-  int16_t gyroZ = readGyroData(GYRO_Z_ADDR) - offset;
-  int16_t accelZ = readGyroData(ACCEL_Z_ADDR);
+  int16_t gyroZ = readSensorData(GYRO_Z_ADDR) - offset;
+  int16_t accelZ = readSensorData(ACCEL_Z_ADDR);
   bool safeToFire = false;
 
 //  Serial.write("Gyro Z rate of change: ");
@@ -62,12 +62,12 @@ void loop() {
 int16_t getOffset() {
   int16_t accumulator = 0;
   for(int i=0; i<15; i++) {
-    accumulator += readGyroData(GYRO_Z_ADDR);
+    accumulator += readSensorData(GYRO_Z_ADDR);
   }
   return -(accumulator/15);
 }
 
-int16_t readGyroData(uint8_t addr) {
+int16_t readSensorData(uint8_t addr) {
   int16_t ret;
   uint8_t rawData[2]; // This is bad. Allocate outside of loops
   getBytes(rawData, MPU_ADDR, addr, 2);
