@@ -47,7 +47,6 @@ void loop() {
     }
   } else {
       digitalWrite(6, LOW);
-      safeToFire = false;
    }
 
   // Red if it's not safe to fire
