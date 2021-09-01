@@ -29,6 +29,8 @@ void loop() {
 //  Serial.write("\n");
 
   // Yellow if moving too much
+  // TODO: Tune this to fit reasonable rate
+    // Maybe use a lower level for degrees per second or actually convert to degrees?
   if(abs(gyroZ) > 200) {
     digitalWrite(5, HIGH);
     safeToFire = false;
@@ -39,7 +41,7 @@ void loop() {
 
   if(safeToFire) {
   // Green if not moving too much
-    if(accelZ < 9191) {
+    if(accelZ < 9191) { // Roughly sin(45) of what it is when level
       digitalWrite(6, HIGH);
     } else {
       digitalWrite(6, LOW);
