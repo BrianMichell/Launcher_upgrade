@@ -25,7 +25,7 @@ void loop() {
   bool safeToFire = false;
 
 //  Serial.write("Gyro Z rate of change: ");
-//  Serial.print(z);
+//  Serial.print(gyroZ);
 //  Serial.write("\n");
 
   // Yellow if moving too much
@@ -62,10 +62,10 @@ void loop() {
 
 int16_t getOffset(int16_t reg) {
   int16_t accumulator = 0;
-  for(int i=0; i<15; i++) {
+  for(int i=0; i<50; i++) {
     accumulator += readSensorData(reg);
   }
-  return -(accumulator/15);
+  return accumulator/50;
 }
 
 int16_t readSensorData(uint8_t addr) {
