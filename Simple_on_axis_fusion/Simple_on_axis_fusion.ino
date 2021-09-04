@@ -40,12 +40,12 @@ void loop() {
   }
 
   // Green if not moving too much
-    if(accelZ < 9191) { // Roughly sin(45) of what it is when level
-      digitalWrite(6, HIGH);
-    } else {
-      digitalWrite(6, LOW);
-      safeToFire = false;
-    }
+  if(accelZ < 9191) { // Roughly sin(45) of what it is when level
+    digitalWrite(6, HIGH);
+  } else {
+    digitalWrite(6, LOW);
+    safeToFire = false;
+  }
 
   // Red if it's not safe to fire
   if(safeToFire) {
