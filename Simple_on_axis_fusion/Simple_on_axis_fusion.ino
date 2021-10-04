@@ -1,6 +1,7 @@
 #include <Wire.h>
 #define MPU_ADDR 0x68
 #define GYRO_Z_ADDR 0x43
+// Actually Gyro X address
 #define ACCEL_Z_ADDR 0x3F
 
 int16_t offset;
